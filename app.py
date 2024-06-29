@@ -10,20 +10,24 @@ def home():
     return render_template('home.html')
 
 
-with engine.connect() as conn:
-  result = conn.execution_options(stream_results=False).execute(text("select * from projects"))
-  rows = result.fetchall()
-  columns = result.keys()
-  projects = []
-  for row in rows:
-    project = {col: getattr(row, col) for col in columns}
-    projects.append(project)
+
 
   # print(rows_dicts)
 
 @app.route('/projects')
 def projects():
-    return render_template('projects.html',projects = projects)
+    rows_dicts = []
+
+    with engine.connect() as conn:
+        result = conn.execution_options(stream_results=False).execute(text("select * from projects"))
+        rows = result.fetchall()
+        columns = result.keys()
+
+        for row in rows:
+            row_dict = {col: getattr(row, col) for col in columns}
+            rows_dicts.append(row_dict)
+
+    return render_template('projects.html', projects=rows_dicts)
 
 
 @app.route('/resume')

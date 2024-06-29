@@ -1,0 +1,20 @@
+<style>
+  .row{
+    border: 2px solid black;
+    padding: 50px 30px;
+    margin-bottom: 20px;
+  }
+</style>
+<div class="row">
+  <div class="col-md-4" style="margin-bottom:30px;padding-top:20px;">
+    <h4>{{project['title']}}</h4><br>
+    <p class="lead"><b>Purpose: </b>{{" "+project['purpose']}}</p><br>
+    <p><b>Tools Used: </b>{{" "+project['languages']}}</p><br>
+    <!-- <p>{{project['description']}}</p> -->
+  </div>
+  <div class="col-md-4 offset-md-4 " style="padding-top:50px;">
+    
+    <a href={{project['link']}} class="btn btn-primary btn-lg " style ="padding: 20px 30px;">Link</a>
+    
+  </div>
+</div>

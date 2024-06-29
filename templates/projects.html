@@ -10,6 +10,10 @@
 </head>
 <body>
   {% include 'nav.html' %}
-  
+  <div class="container text-center" style="margin-top:50px;">
+    {% for project in projects %}
+    {% include 'project.html' %}
+    {% endfor %}
+  </div>
 </body>
 </html>
