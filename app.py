@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+from database import engine
+from sqlalchemy import text
 
 app = Flask(__name__)
 
@@ -8,9 +10,20 @@ def home():
     return render_template('home.html')
 
 
+with engine.connect() as conn:
+  result = conn.execution_options(stream_results=False).execute(text("select * from projects"))
+  rows = result.fetchall()
+  columns = result.keys()
+  projects = []
+  for row in rows:
+    project = {col: getattr(row, col) for col in columns}
+    projects.append(project)
+
+  # print(rows_dicts)
+
 @app.route('/projects')
 def projects():
-    return render_template('projects.html')
+    return render_template('projects.html',projects = projects)
 
 
 @app.route('/resume')
